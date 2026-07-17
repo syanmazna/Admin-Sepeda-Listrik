@@ -1,13 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     /* =================================================================
-       1. BAGIAN DURASI PEMINJAMAN (Tetap sama)
+       1. BAGIAN DURASI PEMINJAMAN 
        ================================================================= */
     const btnEditDurasi = document.getElementById('btnEdit'); 
     const btnBatalDurasi = document.getElementById('btnBatal');
     const btnSimpanDurasi = document.getElementById('btnSimpan');
     const actionButtonsDurasi = document.getElementById('actionButtons');
     const timeInputs = document.querySelectorAll('.time-box');
+    
     const STORAGE_KEY_DURASI = 'durasi_sepeda_uin';
 
     function loadDurasi() {
@@ -21,30 +22,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     loadDurasi();
 
-    if (btnEditDurasi) {
+    if (btnEditDurasi && actionButtonsDurasi) {
         btnEditDurasi.addEventListener('click', () => {
             timeInputs.forEach(input => input.removeAttribute('readonly'));
-            if(actionButtonsDurasi) actionButtonsDurasi.style.display = 'flex';
+            actionButtonsDurasi.style.display = 'flex';
             btnEditDurasi.classList.add('disabled');
         });
     }
 
-    if (btnBatalDurasi) {
+    if (btnBatalDurasi && actionButtonsDurasi) {
         btnBatalDurasi.addEventListener('click', () => {
             loadDurasi();
             timeInputs.forEach(input => input.setAttribute('readonly', true));
-            if(actionButtonsDurasi) actionButtonsDurasi.style.display = 'none';
-            btnEditDurasi.classList.remove('disabled');
+            actionButtonsDurasi.style.display = 'none';
+            if (btnEditDurasi) btnEditDurasi.classList.remove('disabled');
         });
     }
 
-    if (btnSimpanDurasi) {
+    if (btnSimpanDurasi && actionButtonsDurasi) {
         btnSimpanDurasi.addEventListener('click', () => {
             const newValues = Array.from(timeInputs).map(input => input.value);
             localStorage.setItem(STORAGE_KEY_DURASI, JSON.stringify(newValues));
             timeInputs.forEach(input => input.setAttribute('readonly', true));
-            if(actionButtonsDurasi) actionButtonsDurasi.style.display = 'none';
-            btnEditDurasi.classList.remove('disabled');
+            actionButtonsDurasi.style.display = 'none';
+            if (btnEditDurasi) btnEditDurasi.classList.remove('disabled');
         });
     }
 
@@ -52,8 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
        2. LOGIKA RENDER, TAMBAH, EDIT & HAPUS SEPEDA
        ================================================================= */
     const sepedaListContainer = document.getElementById('sepedaListContainer');
-    
-    // Elemen Kotak Detail (Edit/Hapus)
     const sepedaDetailBox = document.getElementById('sepedaDetail');
     const inputDetailName = document.getElementById('detailName'); 
     const btnCloseDetail = document.getElementById('btnCloseDetail');
@@ -61,19 +60,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnHapusSepeda = document.getElementById('btnHapusSepeda');
     const btnSimpanSepeda = document.getElementById('btnSimpanSepeda');
 
-    // Elemen Kotak Tambah
     const btnBukaTambah = document.getElementById('btnBukaTambah');
     const tambahSepedaBox = document.getElementById('tambahSepedaBox');
     const btnCloseTambah = document.getElementById('btnCloseTambah');
     const inputKodeSepeda = document.getElementById('inputKodeSepeda');
     const btnSubmitTambah = document.getElementById('btnSubmitTambah');
 
-    // Database Sederhana di Memori
+    // Elemen Custom Alert Hapus
+    const modalConfirmHapus = document.getElementById('modalConfirmHapus');
+    const confirmBikeName = document.getElementById('confirmBikeName');
+    const btnConfirmHapus = document.getElementById('btnConfirmHapus');
+    const btnCancelHapus = document.getElementById('btnCancelHapus');
+
     const STORAGE_KEY_SEPEDA = 'data_sepeda_dashboard_final';
     let savedBikes = [];
     let activeCardIndex = null;
 
-    // Ambil data, kalau kosong buat 2 sepeda default
     const dataMemori = localStorage.getItem(STORAGE_KEY_SEPEDA);
     if (dataMemori) {
         savedBikes = JSON.parse(dataMemori);
@@ -89,15 +91,13 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem(STORAGE_KEY_SEPEDA, JSON.stringify(savedBikes));
     }
 
-    // FUNGSI UTAMA: Menampilkan list sepeda ke HTML
     function renderListSepeda() {
         if (!sepedaListContainer) return;
-        sepedaListContainer.innerHTML = ''; // Kosongkan dulu
+        sepedaListContainer.innerHTML = ''; 
 
         savedBikes.forEach((bike, index) => {
-            if (bike.terhapus) return; // Skip yang terhapus
+            if (bike.terhapus) return; 
 
-            // Bikin tag div untuk kartu sepeda
             const card = document.createElement('div');
             card.className = `sepeda-card ${index === activeCardIndex ? 'active' : ''}`;
             card.innerHTML = `
@@ -107,56 +107,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="bike-name">${bike.nama}</div>
             `;
 
-            // Kalau kartunya diklik, buka kotak detail
             card.addEventListener('click', () => {
                 activeCardIndex = index;
-                renderListSepeda(); // Refresh biar warnanya berubah abu-abu
+                renderListSepeda(); 
                 
-                // Munculkan modal detail
-                tambahSepedaBox.style.display = 'none'; // Sembunyikan form tambah
-                sepedaDetailBox.style.display = 'flex';
+                if (tambahSepedaBox) tambahSepedaBox.style.display = 'none'; 
+                if (sepedaDetailBox) sepedaDetailBox.style.display = 'flex';
                 
-                inputDetailName.value = bike.nama;
-                inputDetailName.setAttribute('readonly', true);
-                inputDetailName.style.borderBottom = "none";
+                if (inputDetailName) {
+                    inputDetailName.value = bike.nama;
+                    inputDetailName.setAttribute('readonly', true);
+                    inputDetailName.style.borderBottom = "none";
+                }
 
-                btnEditSepeda.classList.remove('editing');
-                btnSimpanSepeda.style.display = 'none';
-                btnHapusSepeda.style.display = 'block';
+                if (btnEditSepeda) btnEditSepeda.classList.remove('editing');
+                if (btnSimpanSepeda) btnSimpanSepeda.style.display = 'none';
+                if (btnHapusSepeda) btnHapusSepeda.style.display = 'block';
             });
 
             sepedaListContainer.appendChild(card);
         });
     }
 
-    // Panggil render saat pertama kali buka web
     renderListSepeda();
 
-    // --- EVENT TAMBAH SEPEDA (TOMBOL KUNING) ---
     if (btnBukaTambah) {
         btnBukaTambah.addEventListener('click', () => {
             activeCardIndex = null;
-            renderListSepeda(); // Hapus seleksi aktif di daftar
+            renderListSepeda(); 
             
-            sepedaDetailBox.style.display = 'none';
-            tambahSepedaBox.style.display = 'flex'; // Munculkan form tambah
-            inputKodeSepeda.value = ''; // Kosongkan input
-            inputKodeSepeda.focus();
+            if (sepedaDetailBox) sepedaDetailBox.style.display = 'none';
+            if (tambahSepedaBox) tambahSepedaBox.style.display = 'flex'; 
+            if (inputKodeSepeda) {
+                inputKodeSepeda.value = ''; 
+                inputKodeSepeda.focus();
+            }
         });
     }
 
-    // --- EVENT KLIK SUBMIT TAMBAH SEPEDA (TOMBOL HIJAU) ---
     if (btnSubmitTambah) {
         btnSubmitTambah.addEventListener('click', () => {
             const kode = inputKodeSepeda.value.trim();
             if (kode !== '') {
                 const namaBaru = `Sepeda Listrik ${kode}`;
-                // Masukkan ke database memori
                 savedBikes.push({ nama: namaBaru, terhapus: false });
                 saveBikes();
                 
-                // Tutup kotak tambah & perbarui list
-                tambahSepedaBox.style.display = 'none';
+                if (tambahSepedaBox) tambahSepedaBox.style.display = 'none';
                 renderListSepeda();
             } else {
                 alert("Isi kode sepedanya dulu ya!");
@@ -164,23 +161,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Tutup kotak tambah
     if (btnCloseTambah) {
         btnCloseTambah.addEventListener('click', () => {
-            tambahSepedaBox.style.display = 'none';
+            if (tambahSepedaBox) tambahSepedaBox.style.display = 'none';
         });
     }
 
-    // Tutup kotak detail
     if (btnCloseDetail) {
         btnCloseDetail.addEventListener('click', () => {
-            sepedaDetailBox.style.display = 'none';
+            if (sepedaDetailBox) sepedaDetailBox.style.display = 'none';
             activeCardIndex = null;
             renderListSepeda();
         });
     }
 
-    // Edit nama sepeda
     if (btnEditSepeda) {
         btnEditSepeda.addEventListener('click', function() {
             if (!this.classList.contains('editing') && inputDetailName) {
@@ -194,13 +188,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 inputDetailName.style.borderBottom = "2px dashed #a0a6b1"; 
 
                 this.classList.add('editing');
-                btnHapusSepeda.style.display = 'none';
-                btnSimpanSepeda.style.display = 'block';
+                if (btnHapusSepeda) btnHapusSepeda.style.display = 'none';
+                if (btnSimpanSepeda) btnSimpanSepeda.style.display = 'block';
             }
         });
     }
 
-    // Simpan hasil edit
     if (btnSimpanSepeda) {
         btnSimpanSepeda.addEventListener('click', function() {
             if (activeCardIndex === null) return;
@@ -213,25 +206,51 @@ document.addEventListener('DOMContentLoaded', () => {
             btnEditSepeda.classList.remove('editing');
             
             this.style.display = 'none';
-            btnHapusSepeda.style.display = 'block';
+            if (btnHapusSepeda) btnHapusSepeda.style.display = 'block';
             
-            renderListSepeda(); // Perbarui list di kiri
+            renderListSepeda(); 
         });
     }
 
-    // Hapus sepeda
+    /* =================================================================
+       3. LOGIKA CUSTOM MODAL HAPUS SEPEDA
+       ================================================================= */
+       
+    // Saat tombol Hapus di detail diklik
     if (btnHapusSepeda) {
         btnHapusSepeda.addEventListener('click', function() {
+            if (activeCardIndex !== null && modalConfirmHapus) {
+                // Tampilkan nama sepeda yang benar di modal
+                if (confirmBikeName) confirmBikeName.textContent = savedBikes[activeCardIndex].nama;
+                
+                // Munculkan custom pop-up
+                modalConfirmHapus.style.display = 'flex';
+            }
+        });
+    }
+
+    // Saat tombol "Batal" (Hijau) ditekan
+    if (btnCancelHapus) {
+        btnCancelHapus.addEventListener('click', () => {
+            // Sembunyikan pop-up, jangan hapus apa-apa
+            modalConfirmHapus.style.display = 'none';
+        });
+    }
+
+    // Saat tombol "Hapus" (Merah) ditekan
+    if (btnConfirmHapus) {
+        btnConfirmHapus.addEventListener('click', () => {
             if (activeCardIndex !== null) {
-                const konfirmasi = confirm('Yakin ingin menghapus sepeda ini?');
-                if (konfirmasi) {
-                    savedBikes[activeCardIndex].terhapus = true;
-                    saveBikes();
-                    
-                    sepedaDetailBox.style.display = 'none';
-                    activeCardIndex = null;
-                    renderListSepeda(); // Perbarui list, sepedanya bakal hilang dari tampilan
-                }
+                // Eksekusi hapus di memori
+                savedBikes[activeCardIndex].terhapus = true;
+                saveBikes();
+                
+                // Tutup kotak detail & modal alert
+                if (sepedaDetailBox) sepedaDetailBox.style.display = 'none';
+                modalConfirmHapus.style.display = 'none';
+                
+                activeCardIndex = null;
+                renderListSepeda(); // Perbarui daftar di kiri
             }
         });
     }
