@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="daftar-sepeda.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="main-layout">
+        
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <button class="menu-item" style="font-size: 12pt;">
+                <img src="assets/dash.svg" alt="dashboard" width="20pt" style="padding-right: 5px;">Dashboard
+            </button>
+            <button class="menu-item" style="font-size: 12pt;">
+                <img src="assets/riw.svg" alt="riwayat" width="22pt" style="padding-right: 5px;">Riwayat
+            </button>
+            <button class="menu-item active" style="font-size: 12pt;">
+                <img src="assets/sep.svg" alt="daftar sepeda" width="22pt" style="padding-right: 5px;">Daftar Sepeda
+            </button>
+            <button class="menu-item" style="font-size: 12pt;">
+                <img src="assets/us.svg" alt="daftar user" width="22pt" style="padding-right: 5px;">Daftar User
+            </button>
+            <button class="menu-item" style="font-size: 12pt;">
+                <img src="assets/pro.svg" alt="profile" width="22pt" style="padding-right: 5px;">Profile
+            </button>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="content">
+            <div class="sepeda-layout">
+                
+                <!-- Bagian Kiri: Daftar Sepeda -->
+                <div class="sepeda-left">
+                    <h2>Daftar Sepeda</h2>
+                    <!-- Tambahkan ID btnBukaTambah di sini -->
+                    <button class="btn-tambah" id="btnBukaTambah">Tambah +</button>
+
+                    <!-- KOSONGKAN ISINYA, JS YANG AKAN MENGISI KARTUNYA SECARA OTOMATIS -->
+                    <div class="sepeda-list" id="sepedaListContainer">
+                    </div>
+                </div>
+
+                <!-- Bagian Kanan: Durasi Peminjaman -->
+                <div class="sepeda-right">
+                    <h3 class="durasi-title">Durasi Peminjaman</h3>
+                    
+                    <div class="durasi-container">
+                        <input type="text" class="time-box" id="t-h" value="0" maxlength="1" readonly>
+                        <span class="colon">:</span>
+                        <input type="text" class="time-box" id="t-m1" value="9" maxlength="1" readonly>
+                        <input type="text" class="time-box" id="t-m2" value="0" maxlength="1" readonly>
+                        <span class="colon">:</span>
+                        <input type="text" class="time-box" id="t-s1" value="0" maxlength="1" readonly>
+                        <input type="text" class="time-box" id="t-s2" value="0" maxlength="1" readonly>
+                        
+                        <button class="btn-edit" id="btnEdit">
+                            <span class="edit-icon">📝</span> Edit
+                        </button>
+                    </div>
+
+                    <!-- Wadah untuk Tombol Batal & Simpan (Disembunyikan di awal) -->
+                    <div class="action-buttons" id="actionButtons" style="display: none;">
+                        <button class="btn-batal" id="btnBatal">Batal</button>
+                        <button class="btn-simpan" id="btnSimpan">Simpan</button>
+                    </div>
+                </div>
+
+            </div> <!-- Akhir sepeda-layout -->
+
+            <!-- Kotak Detail Sepeda (Edit & Hapus) -->
+            <div class="sepeda-detail-box" id="sepedaDetail" style="display: none;">
+                <button class="btn-close-detail" id="btnCloseDetail">&times;</button>
+                
+                <div class="detail-icon">
+                    <img src="assets/sepeda.svg" alt="sepeda">
+                </div>
+                
+                <!-- Tag h3 diubah jadi input agar kompatibel 100% dengan fitur Edit JS -->
+                <input type="text" class="detail-name-input" id="detailName" value="" readonly>
+                
+                <div class="detail-actions">
+                    <button class="btn-edit-sepeda" id="btnEditSepeda">Edit</button>
+                    <button class="btn-hapus-sepeda" id="btnHapusSepeda">Hapus</button>
+                    <button class="btn-simpan-sepeda" id="btnSimpanSepeda" style="display: none;">Simpan</button>
+                </div>
+            </div>
+
+            <!-- KOTAK BARU: Untuk Tambah Sepeda -->
+            <div class="sepeda-detail-box" id="tambahSepedaBox" style="display: none;">
+                <button class="btn-close-detail" id="btnCloseTambah">&times;</button>
+                
+                <div class="detail-icon">
+                    <img src="assets/sepeda.svg" alt="sepeda">
+                </div>
+                
+                <!-- Teks "Sepeda Listrik" berdampingan dengan input kotak -->
+                <div class="input-tambah-container">
+                    <span class="prefix-tambah">Sepeda Listrik</span>
+                    <input type="text" id="inputKodeSepeda" class="input-kode" placeholder="..." maxlength="4">
+                </div>
+                
+                <!-- Tombol Simpan/Tambah berwarna hijau -->
+                <button class="btn-simpan-sepeda" id="btnSubmitTambah" style="background-color: #10b981; margin: 0 auto; display: block; width: 100%; max-width: 150px;">Tambah</button>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="daftar-sepeda.js"></script>
+</body>
+</html>

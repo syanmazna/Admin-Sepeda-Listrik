@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="riwayat.css">
+    <title>Riwayat</title>
+</head>
+<body>
+    <div class="main-layout">
+        <!-- Sidebar -->
+         <nav class="sidebar">
+            <button class="menu-item" style="font-size: 12pt;"><img src="assets/dash.svg" alt="dash" width="20pt" style="padding-right: 5px; ">Dashboard</button>
+            <button class="menu-item active" style="font-size: 12pt;"><img src="assets/riw.svg" alt="dash" width="22pt" style="padding-right: 5px; ">Riwayat</button>
+            <button class="menu-item" style="font-size: 12pt;"><img src="assets/sep.svg" alt="dash" width="22pt" style="padding-right: 5px; ">Daftar Sepeda</button>
+            <button class="menu-item" style="font-size: 12pt;"><img src="assets/us.svg" alt="dash" width="22pt" style="padding-right: 5px; ">Daftar User</button>
+            <button class="menu-item" style="font-size: 12pt;"><img src="assets/pro.svg" alt="dash" width="22pt" style="padding-right: 5px; ">Profile</button>
+        </nav>
+
+        <!-- Content Area -->
+        <!-- Bagian Content Utama di dalam .content -->
+<main class="content">
+    <h2>Riwayat Peminjaman Sepeda</h2>
+    
+    <div class="filter-container">
+        <select id="bulanFilter">
+            <option value="Juli">Juli</option>
+            <option value="Agustus">Agustus</option>
+            <option value="September">September</option>
+            <option value="Oktober">Oktober</option>
+            <option value="November">November</option>
+            <option value="Desember">Desember</option>
+            <!-- Tambahkan bulan lainnya -->
+        </select>
+        <select>
+            <option>2026</option>
+            <!-- Tambahkan tahun lainnya -->
+        </select>
+    </div>
+
+    <div id="riwayatList" class="list-container">
+    <!-- List akan muncul di sini via JS -->
+</div>
+</main>
+</div>
+<script src="riwayat.js"></script>
+</body>
+</html>

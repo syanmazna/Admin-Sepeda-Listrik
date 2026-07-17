@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="dashboard.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="main-layout">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <button class="menu-item active" style="font-size: 12pt;"><img src="assets/dash.svg" alt="dash" width="20pt" style="padding-right: 5px; ">Dashboard</button>
+            <button class="menu-item" style="font-size: 12pt;"><img src="assets/riw.svg" alt="dash" width="22pt" style="padding-right: 5px; ">Riwayat</button>
+            <button class="menu-item" style="font-size: 12pt;"><img src="assets/sep.svg" alt="dash" width="22pt" style="padding-right: 5px; ">Daftar Sepeda</button>
+            <button class="menu-item" style="font-size: 12pt;"><img src="assets/us.svg" alt="dash" width="22pt" style="padding-right: 5px; ">Daftar User</button>
+            <button class="menu-item" style="font-size: 12pt;"><img src="assets/pro.svg" alt="dash" width="22pt" style="padding-right: 5px; ">Profile</button>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="content">
+            <div class="map-placeholder">
+                <img src="assets/maps.svg" alt="maps">
+            </div>
+
+            <h3 class="subtitle">Sepeda dipinjam</h3>
+            
+            <div class="list-container">
+                <div class="card">
+    <!-- Tambahkan wadah ini -->
+    <div class="bike-icon-placeholder">
+        <img src="assets/sepeda.svg" alt="sepeda" width="50px">
+    </div>
+    
+    <div class="bike-info">Sepeda Listrik A11</div>
+    <div class="timer red">0:05:00</div>
+    <div class="user-info">
+        <strong>Abimanyu Ramadhan</strong><br>
+        124090101000 • Teknik Informatika
+    </div>
+</div>
+                </div>
+                <div class="card">
+    <!-- Tambahkan wadah ini -->
+    <div class="bike-icon-placeholder">
+         <img src="assets/sepeda.svg" alt="sepeda" width="50px">
+    </div>
+    
+    <div class="bike-info">Sepeda Listrik A11</div>
+    <div class="timer green ">0:30:00</div>
+    <div class="user-info">
+        <strong>Rina Utami</strong><br>
+        124090101002 • Biologi
+    </div>
+</div>
+            </div>
+        </main>
+    </div>
+    <!-- Modal Peta -->
+<div id="mapModal" class="modal">
+    <span class="close">&times;</span>
+    <img src="assets/maps.svg" alt="Full Map">
+
+    <script src="dashboard.js"></script>
+</div>
+</body>
+</html>

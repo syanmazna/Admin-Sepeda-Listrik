@@ -1,0 +1,361 @@
+/* ==========================================================================
+   1. Base & Layout Utama
+   ========================================================================== */
+body { 
+    margin: 0; 
+    font-family: sans-serif; 
+    background-color: #2c3e80; 
+    height: 100vh; 
+}
+
+.main-layout { 
+    display: flex; 
+    padding: 20px; 
+    gap: 20px; 
+    height: 100vh; 
+    box-sizing: border-box; 
+}
+
+.content { 
+    flex-grow: 1; 
+    background: white; 
+    border-radius: 20px; 
+    padding: 20px; 
+    overflow-y: auto; 
+}
+
+/* Layout untuk membagi halaman daftar sepeda (Kiri & Kanan) */
+.sepeda-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    padding-top: 10px;
+}
+
+/* ==========================================================================
+   2. Sidebar & Logo
+   ========================================================================== */
+.sidebar { 
+    width: 250px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+}
+
+.logo-sidebar {
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo-sidebar img {
+    width: 80%;
+    max-width: 120px;
+    height: auto;
+}
+
+.menu-item { 
+    padding: 15px; 
+    border-radius: 10px; 
+    border: none; 
+    cursor: pointer; 
+    font-weight: bold; 
+    text-align: left; 
+    background: white; 
+}
+
+.menu-item.active { 
+    background: #ffcc00; 
+}
+
+/* ==========================================================================
+   3. Bagian Kiri: Daftar & Card Sepeda
+   ========================================================================== */
+.sepeda-left {
+    flex: 1;
+    max-width: 500px;
+}
+
+.btn-tambah {
+    background-color: #f5b000;
+    color: black;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 25px;
+}
+
+.sepeda-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sepeda-card {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #737373;
+    border-radius: 12px;
+    gap: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.sepeda-card:hover {
+    background-color: #f0f0f0;
+}
+
+.sepeda-card.active {
+    background-color: #a0a6b1;
+    border-color: #a0a6b1;
+}
+
+.sepeda-card.active .bike-name {
+    color: #2c3e80;
+}
+
+.bike-icon-box img {
+    width: 40px;
+}
+
+.bike-name {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #2c3e80;
+}
+
+/* ==========================================================================
+   4. Bagian Kanan: Durasi Peminjaman & Tombol Aksi
+   ========================================================================== */
+.sepeda-right {
+    flex: 1;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.durasi-title {
+    color: #3b4d6b;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.durasi-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.time-box {
+    border: 1px solid #737373;
+    border-radius: 8px;
+    padding: 10px 0;
+    font-size: 1.6em;
+    font-weight: bold;
+    text-align: center;
+    background-color: white;
+    width: 45px;
+    color: black;
+    outline: none;
+}
+
+.time-box:read-only {
+    cursor: default;
+}
+
+.time-box:focus:not(:read-only) {
+    border-color: #2c3e80;
+    box-shadow: 0 0 5px rgba(44, 62, 128, 0.3);
+}
+
+.colon {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.btn-edit {
+    background: none;
+    border: none;
+    color: #2c3e80;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-edit.disabled {
+    color: #b0b0b0;
+    cursor: not-allowed;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    margin-left: 70px;
+}
+
+.btn-batal {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-simpan {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   5. Kotak Detail Sepeda
+   ========================================================================== */
+.sepeda-detail-box {
+    position: relative; /* Penting untuk tombol close (&times;) absolut di dalamnya */
+    margin-top: -98px;
+    border: 1px solid #737373;
+    border-radius: 12px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 350px;
+    background-color: white;
+    margin-left: 500px;
+    margin-right: auto; 
+}
+
+.btn-close-detail {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #737373;
+}
+
+.detail-icon img {
+    width: 60px;
+    margin-bottom: 15px;
+}
+
+.detail-name {
+    color: #2c3e80;
+    margin-bottom: 25px;
+    font-size: 1.4em;
+    text-align: center;
+}
+
+.detail-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 150px;
+}
+
+.btn-edit-sepeda {
+    background-color: #f5b000;
+    color: black;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-hapus-sepeda {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Mengganti gaya H3 menjadi Input yang tak terlihat bingkainya */
+.detail-name-input {
+    color: #2c3e80;
+    margin-bottom: 25px;
+    font-size: 1.4em;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-family: inherit;
+    outline: none; /* Menghilangkan garis biru saat diklik */
+}
+
+/* Sedikit garis bawah saat sedang diedit agar user tahu */
+.detail-name-input:not(:read-only) {
+    border-bottom: 2px dashed #a0a6b1; 
+    border-radius: 0;
+}
+
+/* State saat tombol Edit berubah jadi abu-abu */
+.btn-edit-sepeda.editing {
+    background-color: #808080; /* Warna abu-abu */
+    color: black;
+    cursor: default;
+}
+
+/* Desain Tombol Simpan (Hijau) */
+.btn-simpan-sepeda {
+    background-color: #10b981; /* Hijau terang */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Styling Khusus Kotak Tambah Sepeda */
+.input-tambah-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    font-size: 1.4em;
+    color: #2c3e80;
+    font-weight: bold;
+}
+
+.input-kode {
+    width: 60px;
+    font-size: 1em;
+    padding: 5px;
+    border: 1px solid #737373;
+    border-radius: 8px;
+    text-align: center;
+    outline: none;
+    font-weight: bold;
+    color: #2c3e80;
+}
+
+.input-kode:focus {
+    border-color: #2c3e80;
+    box-shadow: 0 0 5px rgba(44, 62, 128, 0.3);
+}

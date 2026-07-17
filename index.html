@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Fakultas Sains dan Teknologi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo-placeholder">
+            <!-- Tempatkan gambar logo kamu di sini -->
+            <img src="assets/Group 29.svg" alt="Logo">
+        </div>
+        
+        <form>
+            <label for="nomor">Nomor Karyawan</label>
+            <input type="text" id="nomor" name="nomor">
+
+            <label for="password">Password</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" name="password">
+                <span class="eye-icon"><img src="assets/Eye off.svg" alt="eye" width="20px"></span>
+            </div>
+
+            <a href="#" class="forgot-link">Forgot Password?</a>
+
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+    <script>
+    // "Database" sederhana
+    const dataKaryawan = {
+        nomor: "250104005",
+        password: "123admin"
+    };
+
+    const form = document.querySelector('form');
+    
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Mencegah halaman reload saat tombol diklik
+
+        const inputNomor = document.getElementById('nomor').value;
+        const inputPassword = document.getElementById('password').value;
+
+        // Pengecekan data
+        if (inputNomor === dataKaryawan.nomor && inputPassword === dataKaryawan.password) {
+            alert("Login Berhasil! Selamat datang.");
+            window.location.href = "dashboard.html";
+        } else {
+            alert("Nomor Karyawan atau Password salah!");
+        }
+    });
+
+    // Fitur untuk melihat password (opsional)
+    const eyeIcon = document.querySelector('.eye-icon');
+    const passwordInput = document.getElementById('password');
+
+    eyeIcon.addEventListener('click', function() {
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+        }
+    });
+</script>
+</body>
+</html> 
